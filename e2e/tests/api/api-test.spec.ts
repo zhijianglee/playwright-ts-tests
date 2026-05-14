@@ -22,8 +22,6 @@ test.describe.serial('API CRUD Test', () => {
       }
     });
 
-    console.log('Response status:', response.status());
-    console.log('Response body:', await response.text());
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(201);
     const post = await response.json();
@@ -39,8 +37,6 @@ test.describe.serial('API CRUD Test', () => {
   //Read post with the id created in the previous test
   test('Read a post', async ({ request }) => {
     const response = await request.get(`/posts/${postId}`);
-    console.log('Response status:', response.status());
-    console.log('Response body:', await response.text());
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
     const res = await response.json();
@@ -60,16 +56,13 @@ test.describe.serial('API CRUD Test', () => {
       }
     });
 
-    console.log('Response status:', response.status());
-    console.log('Response body:', await response.text());
+
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
     const updatedPost = await response.json();
 
     // Verify that the updated post has the new title and body  
     const newgetResponse = await request.get(`/posts/${postId}`);
-    console.log('Get Response status:', newgetResponse.status());
-    console.log('Get Response body:', await newgetResponse.text());
     expect(newgetResponse.ok()).toBeTruthy();
     expect(newgetResponse.status()).toBe(200);
     const res = await newgetResponse.json();
@@ -81,14 +74,10 @@ test.describe.serial('API CRUD Test', () => {
   //Delete the post created in the first test and verify that it has been deleted
   test('Delete a post', async ({ request }) => {
     const response = await request.delete(`/posts/${postId}`);
-    console.log('Response status:', response.status());
-    console.log('Response body:', await response.text());
     expect(response.ok()).toBeTruthy();
     expect(response.status()).toBe(200);
 
     const newgetResponse = await request.get(`/posts/${postId}`);
-    console.log('Get Response status:', newgetResponse.status());
-    console.log('Get Response body:', await newgetResponse.text());
     expect(newgetResponse.status()).toBe(404);
     });
 

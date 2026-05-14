@@ -1,11 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { HomePage } from './pages/HomePage';
-import { GetStartedPage } from './pages/GetStartedPage';
-import { LoginPage } from './pages/LoginPage';
-import { ProductPage } from './pages/ProductPage';
-import { CartPage } from './pages/CartPage';
-import { CheckoutPage } from './pages/CheckoutPage';
-import { BasePage } from './pages/BasePage';
+import { HomePage } from '../../pages/HomePage';
+import { LoginPage } from '../../pages/LoginPage';
+import { ProductPage } from '../../pages/ProductPage';
+import { CartPage } from '../../pages/CartPage';
+import { CheckoutPage } from '../../pages/CheckoutPage';
+import { BasePage } from '../../pages/BasePage';
 
 
 test('login as Standard User', async ({ page }, testInfo) => {
@@ -70,13 +69,8 @@ test('complete order flow as Standard User', async ({ page }, testInfo ) => {
 
   //Verify checkout overview displays correct products, prices, quantities and totals
   for (const product of addedProducts) {
-    for (let i = 0; i < await checkoutPage.cartItems.count(); i++) {
-      const item = checkoutPage.cartItems.nth(i);
-      if (await item.locator('.inventory_item_name').textContent() === product.name) {
-        expect(await checkoutPage.getCheckOutItemPrice(product.name)).toBe(product.price);
-        expect(await checkoutPage.getCheckOutItemQuantity(product.name)).toBe(product.quantity);
-      }
-    }
+    expect(await checkoutPage.getCheckOutItemPrice(product.name)).toBe(product.price);
+    expect(await checkoutPage.getCheckOutItemQuantity(product.name)).toBe(product.quantity);
   }
   
   //Verify totals are correct by calculating expected totals based on the products added to cart and comparing with the displayed totals
@@ -85,7 +79,7 @@ test('complete order flow as Standard User', async ({ page }, testInfo ) => {
   const expectedTax = expectedSubtotal * taxRate;
   const expectedTotal = expectedSubtotal + expectedTax;
 
-  await expect(checkoutPage.ItemTotal).toHaveText(`Item total: $${expectedSubtotal.toFixed(2)}`);
+  await expect(checkoutPage.itemTotal).toHaveText(`Item total: $${expectedSubtotal.toFixed(2)}`);
   await expect(checkoutPage.tax).toHaveText(`Tax: $${expectedTax.toFixed(2)}`);
   await expect(checkoutPage.total).toHaveText(`Total: $${expectedTotal.toFixed(2)}`);
 

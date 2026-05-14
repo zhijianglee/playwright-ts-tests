@@ -13,6 +13,7 @@ export interface Config {
     lockedOutUser: User;
     problemUser: User;
   };
+  taxRate: number;
 }
 
 const secretsPath = path.join(__dirname, 'secrets.json');

@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './e2e/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -37,16 +37,19 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testMatch: '**/ui/**/*.spec.ts',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      testMatch: '**/ui/**/*.spec.ts',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      testMatch: '**/ui/**/*.spec.ts',
       use: { ...devices['Desktop Safari'] },
     },
 
@@ -69,6 +72,18 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
+
+    {
+      name: 'ui',
+      testMatch: '**/ui/**/*.spec.ts',
+      use: { ...devices['Desktop Chrome'], baseURL: 'https://www.saucedemo.com/' },
+    },
+
+    {
+      name: 'api',
+      testMatch: '**/api/**/*.spec.ts',
+      use: { baseURL: 'http://localhost:3000' },
+    },
   ],
 
   /* Run your local dev server before starting the tests */
@@ -78,3 +93,4 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+

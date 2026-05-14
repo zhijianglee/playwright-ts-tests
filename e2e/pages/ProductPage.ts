@@ -2,6 +2,7 @@ import { Page, Locator } from '@playwright/test';
 
 export class ProductPage {
   private page: Page;
+  readonly title: Locator;
   readonly inventoryContainer: Locator;
   readonly inventoryList: Locator;
   readonly inventoryItems: Locator;

@@ -2,9 +2,15 @@ import { expect, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class CheckoutPage extends BasePage {
+
+  itemTotal: ReturnType<Page['locator']>;
+  tax: ReturnType<Page['locator']>;
+  total: ReturnType<Page['locator']>;
+  cartItems: ReturnType<Page['locator']>;
+
   constructor(page: Page) {
     super(page);
-    this.ItemTotal= page.locator('[data-test="subtotal-label"]');
+    this.itemTotal= page.locator('[data-test="subtotal-label"]');
     this.tax = page.locator('[data-test="tax-label"]');
     this.total = page.locator('[data-test="total-label"]');
     this.cartItems= page.locator('[data-test="inventory-item"]');

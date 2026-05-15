@@ -68,6 +68,7 @@ test.describe.serial('API CRUD Test', () => {
     const res = await newgetResponse.json();
     expect(res.title).toBe(newTitle);
     expect(res.body).toBe(newBody);
+    expect(res.userId).toBe(userId);
    });
 
 
